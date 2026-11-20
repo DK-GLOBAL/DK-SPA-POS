@@ -1,0 +1,6 @@
+# DK SPA POS - robots.txt
+User-agent: *
+Allow: /
+
+# Replace YOUR-DOMAIN.com with your real domain, e.g. https://dkspapos.co.ke
+Sitemap: https://YOUR-DOMAIN.com/sitemap.xml
