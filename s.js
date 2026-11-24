@@ -229,7 +229,8 @@ module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
   const out = (c, o, h) => { if (h) for (const k in h) res.setHeader(k, h[k]); res.status(c).json(o); };
   try {
-    if (req.method !== 'POST') return out(405, { err: 'POST only' });
+    if (req.method === 'GET') { const cfg = !!(SB() && KEY()); let table = false, done = false; if (cfg) { try { await kget('ping'); table = true; done = !!(await getB('')); } catch (e) { } } return out(200, { ok: true, service: 'DK SPA POS API', supabaseKeys: cfg, kvTableReachable: table, adminSetupCode: !!process.env.ADMIN_SETUP_CODE, platformSetupDone: done, emailAlerts: !!process.env.RESEND_API_KEY }); }
+    if (req.method !== 'POST') return out(405, { err: 'POST or GET only' });
     if (!SB() || !KEY()) return out(500, { err: 'Server is not configured (Supabase environment variables missing).' });
     let b = req.body; if (typeof b === 'string') { try { b = JSON.parse(b); } catch (e) { b = {}; } } b = b || {};
     const fn = A[b.a]; if (!fn) return out(400, { err: 'Unknown action' });
