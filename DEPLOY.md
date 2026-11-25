@@ -19,3 +19,11 @@ Files (put them in the ROOT of your GitHub repo, keep the `api` folder):
    and every password is stored hashed. Then turn on two-step login when asked.
 5. Test: open the site in a private window / on a phone, log in as JIMMY SPA's manager.
    Then create an account from a phone and watch the bell on the admin screen.
+
+## Updating the system later (admin)
+- To update, replace only the changed files in GitHub (usually index.html and api/s.js) and commit. Vercel redeploys.
+- Spa data lives in Supabase, not in the files, so an update never erases sales, stock or stock takes.
+- New features only ADD data fields (e.g. `stocktakes`). Spas that never used them simply start empty, so old
+  and new versions keep working together. After an update, each device loads the new version the next time
+  the app is opened online (close and reopen the app once).
+- Update api/s.js AND index.html together when a release says so (this stock-take release changes both).
